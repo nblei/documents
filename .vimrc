@@ -62,6 +62,7 @@ nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 nnoremap <leader>( viw<esc>a)<esc>hbi(<esc>lel
 nnoremap <leader>{ viw<esc>a}<esc>hbi{<esc>lel
+nnoremap <leader>< viw<esc>a><esc>hbi<<esc>lel
     " Move to (Beginning) / End of Line
 nnoremap H <home>
 nnoremap L <end>
@@ -94,6 +95,9 @@ inoremap <Up> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
 inoremap <Down> <nop>
+	" Common Makefile stuff
+inoremap <leader>m $? -o $@
+inoremap <leader>M $(CX) $(CXXFLAGS) $? -o $@
 " }}}
 " Operator Maps ------------------------- {{{
 	" Operate on parameters
@@ -102,9 +106,11 @@ onoremap <leader>p i{
 	" Operate in next ()
 onoremap in( :<c-u>normal! f(vi(<cr>
 onoremap in{ :<c-u>normal! f{vi{<cr>
+onoremap in< :execute <c-u>normal! f<vi<<cr>
 	" Operate in last ()
 onoremap il( :<c-u>normal! F)vi(<cr>
 onoremap il{ :<c-u>normal! F}vi{<cr>
+onoremap il< :execute <c-u>normal! F>vi<<cr>
 " }}}
 " }}}
 " Abbrevation typo corrections ------------ {{{
@@ -149,12 +155,21 @@ augroup filetype_c
 	autocmd BufRead,BufNewFile *.c set filetype=c.doxygen
 augroup END
 " }}}
-" C++ file settings --------------------------------------{
+" C++ file settings --------------------------------------{{{
 augroup filetype_cpp
 	autocmd!
 	autocmd BufNewFile *.cpp 0r ~/.vim/skeleton.cpp
 	autocmd BufNewFile *.cpp set filetype=cpp.doxygen
 	autocmd BufNewFile *.h 0r ~/.vim/skeleton.h
+	autocmd BufNewFile *.hpp 0r ~/.vim/skeleton.h
+	autocmd FileType cpp.doxygen nnoremap <buffer> <localleader>c I#<esc>
+augroup END
+" }}}
+" Makefile settings -------------------------------------{{{
+augroup filetype_makefile
+	autocmd!
+	autocmd BufNewFile Makefile 0r ~/.vim/skeleton.Make
+	autocmd BufNewFile makefile :echoerr "makefiles must be named Makefile to receive credit!"
 augroup END
 " }}}
 " Add On Stuff -----------------------------{{{
