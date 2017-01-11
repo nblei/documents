@@ -1,4 +1,8 @@
 " To open and close folds, use 'za'
+" Set UTF-8 encoding
+set enc=utf-8
+set fenc=utf-8
+set termencoding=utf-8
 " Search Highlihgting
 set hlsearch incsearch
 " Set Line Numbers
@@ -25,19 +29,32 @@ augroup END
 " Statusline --------------- {{{
 set noruler
 set laststatus=2
-set statusline=Current:\ %4l\ Total:\ %4L 
+"set statusline=Current:\ %4l\ Total:\ %4L 
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 " }}}
 " Mappings ---------------- {{{
 let mapleader = "," " set mapleader to comma
 let localleader = "\\" " set localleader to \
 noremap <leader><space> viw
 noremap <leader><c-d> dd<esc>
+" Toggle paste mode on and off
+noremap <leader>pp :setlocal paste!<cr>
 " Ctr-d
 noremap <leader>- Vdp
     " shifts line of cursor down 1 line.  doesn't work at end of file
 noremap <leader>_ VdkP
 nnoremap <leader>\ dd
 " Normal Mode Mappings ---------------- {{{
+	" Doxygen Mappings
+nnoremap <F6> :Dox<CR>
+	" YCM Mappings
+nnoremap <leader>F :YcmCompleter FixIt<cr>
+nnoremap <leader>gi :YcmCompleter GoToInclude<CR>
+nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gD :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoTo<CR>
+nnoremap <leader>gt :YcmCompleter GetType<CR>
+nnoremap <leader>GD :YcmCompleter GetDoc<CR>
     " Replace searching with 'magic' searching
 nnoremap / /\v
 nnoremap ? ?\v
@@ -89,6 +106,11 @@ inoremap <leader><c-d> <esc>ddi
 inoremap <leader>\ <esc>ddi
 inoremap <leader><c-u> <esc>VU<esc>$i<right>
 inoremap jk <esc>
+inoremap JK <esc>
+inoremap <leader>b <CR>{<CR><CR>}<esc>ki<tab>
+inoremap <leader>B <CR>{<CR><CR>};<esc>ki<tab>
+inoremap <leader>p <esc>pA
+inoremap <leader>P <esc>PA
     " Disable arrow navigation in insert mode
 inoremap <esc> <nop>
 inoremap <Up> <nop>
@@ -162,7 +184,15 @@ augroup filetype_cpp
 	autocmd BufNewFile *.cpp set filetype=cpp.doxygen
 	autocmd BufNewFile *.h 0r ~/.vim/skeleton.h
 	autocmd BufNewFile *.hpp 0r ~/.vim/skeleton.h
+	autocmd FileType cpp nnoremap <buffer> <localleader>c I#<esc>
 	autocmd FileType cpp.doxygen nnoremap <buffer> <localleader>c I#<esc>
+	autocmd FileType cpp iabbrev typedef using
+	autocmd FileType cpp.doxygen iabbrev typedef using
+	autocmd FileType cpp setlocal foldmethod=syntax
+	autocmd BufWinLeave *.cpp mkview
+	autocmd BufWinEnter *.cpp silent loadview
+	autocmd BufWinLeave *.h mkview
+	autocmd BufWinEnter *.h silent loadview
 augroup END
 " }}}
 " Makefile settings -------------------------------------{{{
@@ -178,8 +208,23 @@ execute pathogen#infect()
 " }}}
 " YouCompeteMe ----------------------------{{{
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_key_list_select_completion = []
+let g:ycm_key_list_previous_completion = []
+" }}}
+" Doxygen ----------------------------------{{{
+let g:DoxygenToolkit_authorName = "Nathaniel Bleier <nbleier3@illinois.edu>"
 " }}}
 " }}}
 " Set Secure
 set exrc
 set secure
+
+" Helper Functions -----------{{{
+" Returns true if paste mode is enabled
+function! HasPaste()
+	if &paste
+		return 'PASTE MODE '
+	en
+	return ' '
+endfunction
+"}}}
