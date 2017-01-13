@@ -1,4 +1,10 @@
 " To open and close folds, use 'za'
+" Pathogen -------------- {{{
+execute pathogen#infect()
+
+filetype plugin indent on
+syntax on
+" }}}
 " Set UTF-8 encoding
 set enc=utf-8
 set fenc=utf-8
@@ -18,12 +24,12 @@ set autoindent
 set smartindent
 set cindent
 set pastetoggle=<f5>
-set colorcolumn=80
+set colorcolumn=120
 highlight ColorColumn ctermbg=darkgray
 " Currsor ------------------ {{{
 augroup cursor_display
 	autocmd!
-	autocmd InsertEnter,InsertLeave * set cul!	
+	autocmd InsertEnter,InsertLeave * set cul!
 augroup END 
 " }}}
 " Statusline --------------- {{{
@@ -45,6 +51,7 @@ noremap <leader>- Vdp
 noremap <leader>_ VdkP
 nnoremap <leader>\ dd
 " Normal Mode Mappings ---------------- {{{
+nnoremap <localleader>c I//
 	" Doxygen Mappings
 nnoremap <F6> :Dox<CR>
 	" YCM Mappings
@@ -86,7 +93,8 @@ nnoremap L <end>
     " Yank word
 nnoremap <leader>y mkevby`k
 	" Cut word
-nnoremap <leader>c mkevbc<esc>'k
+nnoremap <leader>c bevbc
+nnoremap <leader>d bevbd
     " Split Window Navigation
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
@@ -129,10 +137,12 @@ onoremap <leader>p i{
 onoremap in( :<c-u>normal! f(vi(<cr>
 onoremap in{ :<c-u>normal! f{vi{<cr>
 onoremap in< :execute <c-u>normal! f<vi<<cr>
+onoremap in" :execute <c-u>normal! f"vi"<cr>
 	" Operate in last ()
 onoremap il( :<c-u>normal! F)vi(<cr>
 onoremap il{ :<c-u>normal! F}vi{<cr>
 onoremap il< :execute <c-u>normal! F>vi<<cr>
+onoremap il" :execute <c-u>normal! F"vi"<cr>
 " }}}
 " }}}
 " Abbrevation typo corrections ------------ {{{
@@ -156,19 +166,11 @@ augroup END
 " Javascript file settings --------------------- {{{
 augroup filetype_javascript
 	autocmd!
-	autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
-	autocmd FileType javascript :iabbrev <buffer> if if (<left>
-	autocmd FileType javascript :iabbrev <buffer> while while (<left>
-	autocmd FileType javascript :iabbrev <buffer> function function(<left>
+	autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc> 
+	autocmd FileType javascript :iabbrev <buffer> if if (<left> " )
+	autocmd FileType javascript :iabbrev <buffer> while while (<left> " )
+	autocmd FileType javascript :iabbrev <buffer> function function(<left> " )
 augroup END 
-" }}}
-
-" Python file settings ---------------------- {{{
-augroup filetype_python
-	autocmd!
-    autocmd FileType python nnoremap <buffer> <localleader>c I#<esc>
-    " autocmd FileType python :iabbrev <buffer> if if:<left>
-augroup END
 " }}}
 
 " C file settings --------------------------{{{{
@@ -184,15 +186,14 @@ augroup filetype_cpp
 	autocmd BufNewFile *.cpp set filetype=cpp.doxygen
 	autocmd BufNewFile *.h 0r ~/.vim/skeleton.h
 	autocmd BufNewFile *.hpp 0r ~/.vim/skeleton.h
-	autocmd FileType cpp nnoremap <buffer> <localleader>c I#<esc>
-	autocmd FileType cpp.doxygen nnoremap <buffer> <localleader>c I#<esc>
-	autocmd FileType cpp iabbrev typedef using
-	autocmd FileType cpp.doxygen iabbrev typedef using
-	autocmd FileType cpp setlocal foldmethod=syntax
+	autocmd BufWinEnter *.cpp iabbrev typedef using
+	autocmd BufWinEnter *.cpp.doxygen iabbrev typedef using
+	autocmd BufWinEnter *.cpp setlocal foldmethod=syntax
 	autocmd BufWinLeave *.cpp mkview
 	autocmd BufWinEnter *.cpp silent loadview
 	autocmd BufWinLeave *.h mkview
 	autocmd BufWinEnter *.h silent loadview
+	autocmd BufWinEnter *.cpp nnoremap <leader>es :vsplit ~/.vim/UltiSnips/cpp.snippets<cr>
 augroup END
 " }}}
 " Makefile settings -------------------------------------{{{
@@ -203,22 +204,24 @@ augroup filetype_makefile
 augroup END
 " }}}
 " Add On Stuff -----------------------------{{{
-" Pathogen _--------------------------------{{{
-execute pathogen#infect()
-" }}}
-" YouCompeteMe ----------------------------{{{
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-let g:ycm_key_list_select_completion = []
-let g:ycm_key_list_previous_completion = []
-" }}}
 " Doxygen ----------------------------------{{{
 let g:DoxygenToolkit_authorName = "Nathaniel Bleier <nbleier3@illinois.edu>"
 " }}}
+" YouCompleteMe ----------------------------{{{
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_key_list_select_completion=[]
+let g:ycm_key_list_previous_completion=[]
+" }}}
+" UltiSnips --------------------------------{{{
+" Track the plugin
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " }}}
 " Set Secure
 set exrc
 set secure
-
+" }}}
 " Helper Functions -----------{{{
 " Returns true if paste mode is enabled
 function! HasPaste()

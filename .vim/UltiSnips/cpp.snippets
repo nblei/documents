@@ -1,0 +1,93 @@
+# Operator overloads
+
+snippet oversub  "operator[] overload"
+${1:int}& operator[] (const ${2: int} index);
+const $1& operator[] (const $2 index) const;
+${0}
+endsnippet
+
+snippet overout "operator << overload"
+friend std::ostream& operator<< (std::ostream &out, const ${1} &${2});
+${0}
+endsnippet
+
+snippet overin "operator >> overload"
+friend std::istream& operator>> (std::istream &in, ${1} &${2});
+${0}
+endsnippet
+
+snippet overequal "operator == overload"
+friend bool operator==(const ${1} &c1, const $1 &c2);
+${0}
+endsnippet
+
+snippet overnequal "operator != overload"
+friend bool operator!=(const ${1} &c1, const $1 &c2);
+${0}
+endsnippet
+
+snippet overgreater "operator > overload"
+friend bool operator>(const ${1} &c1, const $1 &c2);
+${0}
+endsnippet
+
+snippet overgeq "operator >= overload"
+friend bool operator>=(const ${1} &c1, const $1 &c2);
+${0}
+endsnippet
+
+snippet overless "operator < overload"
+friend bool operator<(const ${1} &c1, const $1 &c2);
+${0}
+endsnippet
+
+snippet overleq "operator <= overload"
+friend bool operator<=(const ${1} &c1, const $1 &c2);
+${0}
+endsnippet
+
+snippet overpreinc "++operator overload"
+${1: Class}& operator++(); // prefix
+${0}
+endsnippet
+
+snippet overpredec "--operator overload"
+${1: Class}& operator--(); // prefix
+${0}
+endsnippet
+
+snippet overpostinc "operator++ overload"
+${1: Class} operator++(); // postfix
+${0}
+endsnippet
+
+snippet overpostdec "operator-- overload"
+${1: Class} operator--(); // postfix
+endsnippet
+
+snippet overpar "operator() overload"
+${1: int&} operator()(${2: arguments});
+const $1 operator()($2) const;
+${0}
+endsnippet
+
+snippet overcast "casting operator overload"
+operator ${1: int}();
+${0}
+endsnippet
+
+# Functors
+snippet functor "Basic functor"
+class ${1: Accumulator}
+{
+private:
+	/* Private Members */
+	${2: int m_counter = 0;}
+
+public:
+	/* Public Members */
+
+	${3: int&} operator() (${4: int i}) { ${5: return }  }
+};
+${0}
+endsnippet
