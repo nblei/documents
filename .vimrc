@@ -196,11 +196,26 @@ augroup filetype_cpp
 	autocmd BufWinEnter *.cpp nnoremap <leader>es :vsplit ~/.vim/UltiSnips/cpp.snippets<cr>
 augroup END
 " }}}
+" LC3 file settings --------------------------------------{{{
+augroup filetype_lc3
+	autocmd!
+	autocmd BufNewFile,BufRead *.asm set filetype=lc3
+	autocmd BufNewFile,BufRead *.asm set tabstop=8
+	autocmd BufNewFile,BufRead *.asm set softtabstop=8
+	autocmd BufNewFile,BufRead *.asm nnoremap <leader>es :vsplit ~/.vim/UltiSnips/lc3.snippets<cr>
+augroup END
+" }}}
 " Makefile settings -------------------------------------{{{
 augroup filetype_makefile
 	autocmd!
 	autocmd BufNewFile Makefile 0r ~/.vim/skeleton.Make
 	autocmd BufNewFile makefile :echoerr "makefiles must be named Makefile to receive credit!"
+augroup END
+" }}}
+" Snippets file settings-------------------{{{
+augroup filetype_snippet
+	autocmd!
+	autocmd BufNewFile *.snippet set syntax on
 augroup END
 " }}}
 " Add On Stuff -----------------------------{{{

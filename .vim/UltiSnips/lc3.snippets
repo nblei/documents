@@ -1,0 +1,90 @@
+snippet newprog "New Program<" 
+	.ORIG x${1:3000}
+	${0}
+	.END
+endsnippet
+
+snippet ADD "Add Two Registers Together"
+ADD ${1:DR}, ${2:SR1}, ${3:SR2} ; ${4: $1 <- $2 + $3}
+${0}
+endsnippet
+
+snippet ADDIM "Add imm5 to register"
+ADD ${1:DR}, ${2:SR1}, ${3:imm5 [-16, 15]} ; ${4: $1 <- $2 + $3}
+${0}
+endsnippet
+
+snippet AND "Bitwise AND two registers"
+AND ${1:DR}, ${2:SR1}, ${3:SR3} ; ${4: $1 <- $2 & $3}
+${0}
+endsnippet
+
+snippet ANDIM "Bitwise imm5 AND register"
+AND ${1:DR}, ${2:SR1}, ${3:imm5 [-16, 15]} ; ${4: $1 <- $2 & $3}
+${0}
+endsnippet
+
+snippet BR "Branch to PC + PCoffset9"
+BR${1:nzp} ${2:LABEL} ; If $1, then PC <- $2
+${0}
+endsnippet
+
+snippet JMP "Jump to Register"
+JMP ${1:BR} ; ${2:PC <- $1}
+${0}
+endsnippet
+
+snippet RET "Return to R7"
+RET ; ${1:PC <- R7}
+${0}
+endsnippet
+
+snippet JSR "Jump to Subroutine"
+JSR ${1:LABEL} ; ${2:PC <- $1}
+${0}
+endsnippet
+
+snippet JSRR "Jump to Subroutine by Register"
+JSRR ${1:BR} ; ${2:PC <- $1}
+${0}
+endsnippet
+
+snippet LD "Load from PCoffset9"
+LD ${1:DR}, ${2:LABEL} ; ${3:$1 <-M[$2]}
+${0}
+endsnippet
+
+snippet LDI "Load Indirect"
+LDI ${1:DR}, ${2:LABEL} ; ${3:$1 <- M[M[$2]]}
+${0}
+endsnippet
+
+snippet LDR "Load from Register + offset6"
+LDR ${1:DR}, ${2:BR}, ${3:off6 [-32, 31]} ; ${4:$1 <- M[$2 + $3]}
+${0}
+endsnippet
+
+snippet LEA "Load Effective Address"
+LEA ${1:DR}, ${2:LABEL} ; ${3:$1 <- address of $2}
+${0}
+endsnippet
+
+snippet NOT "Bit-Wise Complement"
+NOT ${1:DR}, ${2:SR} ; ${3:$1 <- ~$2}
+${0}
+endsnippet
+
+snippet ST "Store"
+ST ${1:SR}, ${2:LABEL} ; ${3:M[$2] <- $1}
+${0}
+endsnippet
+
+snippet STI "Store Indirect"
+STI ${1:SR}, ${2:LABEL} ; ${3:M[M[$2]] <- $1}
+${0}
+endsnippet
+
+snippet STR "Store Base + Offset"
+STR ${1:SR}, ${2:BR}, ${3:off6 [-32, 31]} ; ${4:M[$2 + $3] <-$1}
+${0}
+endsnippet
