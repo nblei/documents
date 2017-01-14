@@ -1,5 +1,19 @@
-# Operator overloads
+# Overwrite default class snippet
+snippet cl "class .. (class)"
+class ${1:`!p snip.rv = snip.basename or "name"`}
+{
+public:
+	${1/(\w+).*/$1/} (${2:arguments});
+	virtual ~${1/(\w+).*/$1/} ();
+	/* copy constructor default set to public */
+	${1/(\w+).*/$1/}(const ${1/(\w+).*/$1/} &c1);
+private:
+	${0:/* data */}
+};
+endsnippet
 
+
+# Operator overloads
 snippet oversub  "operator[] overload"
 ${1:int}& operator[] (const ${2: int} index);
 const $1& operator[] (const $2 index) const;
@@ -73,6 +87,20 @@ endsnippet
 
 snippet overcast "casting operator overload"
 operator ${1: int}();
+${0}
+endsnippet
+
+snippet overasign "opeartor= overload"
+${1:`!p snip.rv = snip.basename or "name"`} operator= (const $1 &c1)
+{
+	// self assignment guard
+	if (this == &c1)
+		return *this;
+	
+	// do the copy
+	${2}
+	return *this;
+}
 ${0}
 endsnippet
 

@@ -1,26 +1,26 @@
 snippet newprog "New Program<" 
-	.ORIG x${1:3000}
-	${0}
-	.END
+		.ORIG x${1:3000}
+		${0}
+		.END
 endsnippet
 
 snippet ADD "Add Two Registers Together"
-ADD ${1:DR}, ${2:SR1}, ${3:SR2} ; ${4: $1 <- $2 + $3}
+ADD ${1:DR}, ${2:SR1}, ${3:SR2} ; ${4: $1 <- $2 + $3}, setcc
 ${0}
 endsnippet
 
 snippet ADDIM "Add imm5 to register"
-ADD ${1:DR}, ${2:SR1}, ${3:imm5 [-16, 15]} ; ${4: $1 <- $2 + $3}
+ADD ${1:DR}, ${2:SR1}, ${3:imm5 [-16, 15]} ; ${4: $1 <- $2 + $3}, setcc
 ${0}
 endsnippet
 
 snippet AND "Bitwise AND two registers"
-AND ${1:DR}, ${2:SR1}, ${3:SR3} ; ${4: $1 <- $2 & $3}
+AND ${1:DR}, ${2:SR1}, ${3:SR3} ; ${4: $1 <- $2 & $3}, setcc
 ${0}
 endsnippet
 
 snippet ANDIM "Bitwise imm5 AND register"
-AND ${1:DR}, ${2:SR1}, ${3:imm5 [-16, 15]} ; ${4: $1 <- $2 & $3}
+AND ${1:DR}, ${2:SR1}, ${3:imm5 [-16, 15]} ; ${4: $1 <- $2 & $3}, setc
 ${0}
 endsnippet
 
@@ -50,27 +50,27 @@ ${0}
 endsnippet
 
 snippet LD "Load from PCoffset9"
-LD ${1:DR}, ${2:LABEL} ; ${3:$1 <-M[$2]}
+LD ${1:DR}, ${2:LABEL} ; ${3:$1 <-M[$2]}, setcc
 ${0}
 endsnippet
 
 snippet LDI "Load Indirect"
-LDI ${1:DR}, ${2:LABEL} ; ${3:$1 <- M[M[$2]]}
+LDI ${1:DR}, ${2:LABEL} ; ${3:$1 <- M[M[$2]]}, setcc
 ${0}
 endsnippet
 
 snippet LDR "Load from Register + offset6"
-LDR ${1:DR}, ${2:BR}, ${3:off6 [-32, 31]} ; ${4:$1 <- M[$2 + $3]}
+LDR ${1:DR}, ${2:BR}, ${3:off6 [-32, 31]} ; ${4:$1 <- M[$2 + $3]}, setcc
 ${0}
 endsnippet
 
 snippet LEA "Load Effective Address"
-LEA ${1:DR}, ${2:LABEL} ; ${3:$1 <- address of $2}
+LEA ${1:DR}, ${2:LABEL} ; ${3:$1 <- address of $2}, setcc
 ${0}
 endsnippet
 
 snippet NOT "Bit-Wise Complement"
-NOT ${1:DR}, ${2:SR} ; ${3:$1 <- ~$2}
+NOT ${1:DR}, ${2:SR} ; ${3:$1 <- ~$2}, setcc
 ${0}
 endsnippet
 
@@ -88,3 +88,26 @@ snippet STR "Store Base + Offset"
 STR ${1:SR}, ${2:BR}, ${3:off6 [-32, 31]} ; ${4:M[$2 + $3] <-$1}
 ${0}
 endsnippet
+
+# Subroutine Snippet
+snippet sub "Create subroutine"
+	    ; BEGIN  ${1:SUBROUTINE}
+	    ; PURPOSE: ${2}
+	    ; R1: ${3:NOT USED}
+	    ; R2: ${4:NOT USED}
+	    ; R3: ${5:NOT USED}
+	    ; R4: ${6:NOT USED}
+	    ; R5: ${7:NOT USED}
+	    ; R6: ${8:NOT USED}
+	    ; R7: ${9:NOT USED}
+	    ; RETURNS: ${10:MEANING} in ${11:R1}
+$1
+	    ${0}
+	    ; END $1
+endsnippet
+
+
+
+
+
+
