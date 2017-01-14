@@ -2,18 +2,46 @@
 snippet cl "class .. (class)"
 class ${1:`!p snip.rv = snip.basename or "name"`}
 {
+private:
+	${0:/* data */}
 public:
 	${1/(\w+).*/$1/} (${2:arguments});
 	virtual ~${1/(\w+).*/$1/} ();
 	/* copy constructor default set to public */
-	${1/(\w+).*/$1/}(const ${1/(\w+).*/$1/} &c1);
-private:
-	${0:/* data */}
+	//${1/(\w+).*/$1/}(const ${1/(\w+).*/$1/} &c1);
 };
 endsnippet
 
+# Derived class snippet
+snippet clder "derived class"
+class ${1:`!p snip.rv = snip.basename or "name"`}: ${2:public} ${3:Parent}
+{
+private:
+	${0:/* data*/}
+public:
+	${1/(\w_).*/$1/}(${4:arguments}); // make sure to call parent $3(args)
+	virtual ~${1/(\w_).*/$1/} ();
+	/* copy constructor default set to public*/
+	//${1/(\w+).*/$1/}(const ${1/(\w_).*/$1/} &c1);
+};
+endsnippet
 
 # Operator overloads
+snippet overarithequals "operator+= and -= overload"
+${1:Type}& operator${2:+=} (${3:Type} ${4:rhs});
+${0}
+endsnippet
+
+snippet overarith "arithmetic operator overload"
+${1:Type} operator${2:+} (${3:$1} &rhs) const;
+${0}
+endsnippet
+
+snippet overunary "Unary operator overload"
+${1:Type} operator${2:-!+}() const;
+${0}
+endsnippet
+
 snippet oversub  "operator[] overload"
 ${1:int}& operator[] (const ${2: int} index);
 const $1& operator[] (const $2 index) const;
@@ -21,7 +49,7 @@ ${0}
 endsnippet
 
 snippet overout "operator << overload"
-friend std::ostream& operator<< (std::ostream &out, const ${1} &${2});
+friend std::ostream& operator<< (std::ostream &out, const ${1:Type} &${2:type});
 ${0}
 endsnippet
 
@@ -31,32 +59,32 @@ ${0}
 endsnippet
 
 snippet overequal "operator == overload"
-friend bool operator==(const ${1} &c1, const $1 &c2);
+friend bool operator==(const ${1} &lhs, const $1 &rhs);
 ${0}
 endsnippet
 
 snippet overnequal "operator != overload"
-friend bool operator!=(const ${1} &c1, const $1 &c2);
+friend bool operator!=(const ${1} &lhs, const $1 &rhs);
 ${0}
 endsnippet
 
 snippet overgreater "operator > overload"
-friend bool operator>(const ${1} &c1, const $1 &c2);
+friend bool operator>(const ${1} &lhs, const $1 &rhs);
 ${0}
 endsnippet
 
 snippet overgeq "operator >= overload"
-friend bool operator>=(const ${1} &c1, const $1 &c2);
+friend bool operator>=(const ${1} &lhs, const $1 &rhs);
 ${0}
 endsnippet
 
 snippet overless "operator < overload"
-friend bool operator<(const ${1} &c1, const $1 &c2);
+friend bool operator<(const ${1} &lhs, const $1 &rhs);
 ${0}
 endsnippet
 
 snippet overleq "operator <= overload"
-friend bool operator<=(const ${1} &c1, const $1 &c2);
+friend bool operator<=(const ${1} &lhs, const $1 &rhs);
 ${0}
 endsnippet
 
@@ -86,7 +114,7 @@ ${0}
 endsnippet
 
 snippet overcast "casting operator overload"
-operator ${1: int}();
+operator ${1: int}() const;
 ${0}
 endsnippet
 

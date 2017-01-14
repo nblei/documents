@@ -121,7 +121,7 @@ inoremap <leader>p <esc>pA
 inoremap <leader>P <esc>PA
     " Disable arrow navigation in insert mode
 inoremap <esc> <nop>
-inoremap <Up> <nop>
+inoremap <Up> <esc>i
 inoremap <Left> <nop>
 inoremap <Right> <nop>
 inoremap <Down> <nop>
@@ -182,10 +182,10 @@ augroup END
 " C++ file settings --------------------------------------{{{
 augroup filetype_cpp
 	autocmd!
-	autocmd BufNewFile *.cpp 0r ~/.vim/skeleton.cpp
-	autocmd BufNewFile *.cpp set filetype=cpp.doxygen
-	autocmd BufNewFile *.h 0r ~/.vim/skeleton.h
-	autocmd BufNewFile *.hpp 0r ~/.vim/skeleton.h
+	" autocmd BufNewFile *.cpp 0r ~/.vim/skeleton.cpp
+	" autocmd BufNewFile *.cpp set filetype=cpp.doxygen
+	" autocmd BufNewFile *.h 0r ~/.vim/skeleton.h
+	" autocmd BufNewFile *.hpp 0r ~/.vim/skeleton.h
 	autocmd BufWinEnter *.cpp iabbrev typedef using
 	autocmd BufWinEnter *.cpp.doxygen iabbrev typedef using
 	autocmd BufWinEnter *.cpp setlocal foldmethod=syntax
