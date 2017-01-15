@@ -1,3 +1,54 @@
+# abstract function
+snippet fundabs "Abstract function definition"
+virtual ${1:void} ${2:function_name}(${3})${4} = 0
+{
+	/* Default Implementation */
+	${5}
+}
+${0}
+endsnippet
+
+# Function Pointers
+snippet funcpointer "Function pointer"
+${1:returnType} (${2:*ptr2function})(${3:argument types})${0}
+endsnippet
+
+# Random Number generator
+snippet rand "Random generation with Mersenne Twister"
+std::random_device rd;
+std::mt19937 gen(rd()); // For distributions, use distro snippets
+endsnippet
+
+snippet distrouni "Uniform Distribution"
+std::uniform_real_distribution<> ${1:dis}(${2:a}, ${3:b}); // $1(gen) to create random variate
+${0}
+endsnippet
+
+snippet  distrouniint "uniform integer distribution"
+std::uniform_int_distribution<> ${1:dis}(${2:a}, ${3:b}); // uniform in [a, b]. $1(gen) to create random variate
+${0}
+endsnippet
+
+snippet distrounit "unit normal uniform distribution"
+std::generate_canonical<double, ${1:10}> (${1:gen}); // ($1) to create random variate
+endsnippet
+
+snippet distrobern	"Bernoulli distribution"
+std::bernoulli_distribution ${1:dis}(${2:p}); // $1(gen) to create random variate 
+endsnippet
+
+# Getter and Setters
+snippet get "Getter"
+${1:Type} get${2:Var}() { return m_${3}; }
+${0}
+endsnippet
+
+snippet set "Setter"
+void set${1:var}(${2:Type} &set) {
+	m_${3:$1} = set;  }
+${0}
+endsnippet
+
 # Overwrite default class snippet
 snippet cl "class .. (class)"
 class ${1:`!p snip.rv = snip.basename or "name"`}
@@ -12,6 +63,31 @@ public:
 };
 endsnippet
 
+# INterface class snippet
+snippet clI "Interface class"
+class ${1:`!p snip.rv = snip.basename or "name"`}
+{
+public:
+	virtual ~${1/(\w+).*/$1/} ();
+	${2}
+};
+${0}
+endsnippet
+
+# Abstract class snippet
+snippet clabs "abstract class"
+class ${1:`!p snip.rv = snip.basename or "name"`}
+{
+protected:
+	${1/(\w_).*/$1/}(${2:arguments});
+	/* copy constructor default set to public*/
+	//${1/(\w+).*/$1/}(const ${1/(\w_).*/$1/} &c1);
+	${0:/* data*/}
+public:
+	${2:virtual ~${1/(\w_).*/$1/} ();}
+	// Use pure virtual functions using snippet fundabs
+};
+endsnippet
 # Derived class snippet
 snippet clder "derived class"
 class ${1:`!p snip.rv = snip.basename or "name"`}: ${2:public} ${3:Parent}
@@ -151,4 +227,10 @@ endsnippet
 # Casts
 snippet sc "Static cast"
 static_cast<${1}>(${2})${0}
+endsnippet
+
+snippet dca "Dynamic cast"
+dynamic_cast<${1:unsigned}>(${2:expr});
+if ($3) /* Ensure casting succesful */
+	${0}
 endsnippet

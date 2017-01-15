@@ -1,10 +1,25 @@
 " To open and close folds, use 'za'
-" Pathogen -------------- {{{
-execute pathogen#infect()
+" Vundle ---------------------------------- {{{
+set nocompatible         " be iMproved, required
+filetype off             " required
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+" Plugin 'L9'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
+call vundle#end()
 filetype plugin indent on
-syntax on
 " }}}
+" Pathogen Replaced by Vundle-------------- {{{
+" execute pathogen#infect()
+
+" filetype plugin indent on
+" syntax on
+" }}}
+" Settings ---------------------------------- {{{
 " Set UTF-8 encoding
 set enc=utf-8
 set fenc=utf-8
@@ -26,6 +41,7 @@ set cindent
 set pastetoggle=<f5>
 set colorcolumn=120
 highlight ColorColumn ctermbg=darkgray
+" }}}
 " Currsor ------------------ {{{
 augroup cursor_display
 	autocmd!
@@ -107,7 +123,7 @@ vnoremap <leader>" c""<esc>P
 vnoremap <leader>( c()<esc>P
 vnoremap <leader>{ c{}<esc>P
 vnoremap <leader>' c''<esc>P
-vnoremap jk <esc>
+vnoremap <leader>jk <esc>
 " }}}
 " Insert Mode Mappings ------------------ {{{
 inoremap <leader><c-d> <esc>ddi
@@ -172,7 +188,6 @@ augroup filetype_javascript
 	autocmd FileType javascript :iabbrev <buffer> function function(<left> " )
 augroup END 
 " }}}
-
 " C file settings --------------------------{{{{
 augroup filetype_c
 	autocmd!
@@ -182,10 +197,10 @@ augroup END
 " C++ file settings --------------------------------------{{{
 augroup filetype_cpp
 	autocmd!
-	" autocmd BufNewFile *.cpp 0r ~/.vim/skeleton.cpp
-	" autocmd BufNewFile *.cpp set filetype=cpp.doxygen
-	" autocmd BufNewFile *.h 0r ~/.vim/skeleton.h
-	" autocmd BufNewFile *.hpp 0r ~/.vim/skeleton.h
+	autocmd BufNewFile *.cpp 0r ~/.vim/skeleton.cpp
+	autocmd BufNewFile *.cpp set filetype=cpp.doxygen
+	autocmd BufNewFile *.h 0r ~/.vim/skeleton.h
+	autocmd BufNewFile *.hpp 0r ~/.vim/skeleton.h
 	autocmd BufWinEnter *.cpp iabbrev typedef using
 	autocmd BufWinEnter *.cpp.doxygen iabbrev typedef using
 	autocmd BufWinEnter *.cpp setlocal foldmethod=syntax
@@ -194,6 +209,7 @@ augroup filetype_cpp
 	autocmd BufWinLeave *.h mkview
 	autocmd BufWinEnter *.h silent loadview
 	autocmd BufWinEnter *.cpp nnoremap <leader>es :vsplit ~/.vim/UltiSnips/cpp.snippets<cr>
+	autocmd BufWinEnter *.h nnoremap <leader>es :vsplit ~/.vim/UltiSnips/cpp.snippets<cr>
 augroup END
 " }}}
 " LC3 file settings --------------------------------------{{{

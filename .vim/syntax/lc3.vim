@@ -8,7 +8,7 @@ if exists("b:current_syntax")
 endif
 
 " Keywords
-syn keyword instructions ADD AND BR JMP RET JSR JSRR LD LDI LDR LEA NOT ST STI STR TRAP GETC OUT PUTS IN PUTSP HALT
+syn keyword instructions ADD AND BR JMP RET JSR JSRR LD LDI LDR LEA NOT ST STI STR TRAP GETC OUT PUTS IN PUTSP HAL
 syn keyword regs R1 R2 R3 R4 R5
 syn keyword specialRegs R6 R7
 syn keyword psuedoOps ORIG END FILL BLKW STRINGZ
