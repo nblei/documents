@@ -9,6 +9,7 @@ Plugin 'Valloric/YouCompleteMe'
 " Plugin 'L9'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+Bundle "myusuf3/numbers.vim"
 
 call vundle#end()
 filetype plugin indent on
@@ -67,6 +68,7 @@ noremap <leader>- Vdp
 noremap <leader>_ VdkP
 nnoremap <leader>\ dd
 " Normal Mode Mappings ---------------- {{{
+	" Numbers toggling
 nnoremap <localleader>c I//
 	" Doxygen Mappings
 nnoremap <F6> :Dox<CR>

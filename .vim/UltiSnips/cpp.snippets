@@ -1,3 +1,42 @@
+# Templates
+snippet temp "template class"
+template <class ${1:T}> 
+${0}
+endsnippet
+
+snippet  tempfunc "template function"
+template <typename ${1:T}> 
+${0}
+endsnippet
+
+snippet tempfuncspec "template function specialization"
+template <${1:/*use for partial template specializon*/}>
+${2:void} ${3:CLASS_NAME}<${4:double}>${5:function_name}(${6:parameters})
+{
+	${0}
+}
+endsnippet
+
+snippet tempspec "template class specialization"
+template <${1:/*use for partial template specializon*/}>
+class ${2:CLASS_NAME}<${3:Specialization_Type}>
+{
+	${0}
+}
+endsnippet
+
+snippet temppointerspec "template class pointer specialization"
+template <typename ${1:T}>
+class ${2:CLASS_NAME}<$1*>
+{
+private:
+	${3:$1* m_values};
+public:
+	${4:$2($1* value)};
+	${0}
+}
+endsnippet
+
 # abstract function
 snippet fundabs "Abstract function definition"
 virtual ${1:void} ${2:function_name}(${3})${4} = 0
