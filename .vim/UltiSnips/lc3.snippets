@@ -5,109 +5,93 @@ snippet newprog "New Program<"
 endsnippet
 
 snippet ADD "Add Two Registers Together" i 
-ADD ${1:DR}, ${2:SR1}, ${3:SR2} ; ${4: $1 <- $2 + $3}, setcc
-${0}
+ADD ${1:DR}, ${2:SR1}, ${3:SR2} ; ${4: $1 <- $2 + $3, setcc}${0}
 endsnippet
 
 snippet ADDIM "Add imm5 to register"
-ADD ${1:DR}, ${2:SR1}, ${3:imm5 [-16, 15]} ; ${4: $1 <- $2 + $3}, setcc
-${0}
+ADD ${1:DR}, ${2:SR1}, ${3:imm5 [-16, 15]} ; ${4: $1 <- $2 + $3, setcc}${0}
 endsnippet
 
 snippet AND "Bitwise AND two registers"
-AND ${1:DR}, ${2:SR1}, ${3:SR3} ; ${4: $1 <- $2 & $3}, setcc
-${0}
+AND ${1:DR}, ${2:SR1}, ${3:SR3} ; ${4: $1 <- $2 & $3, setcc}${0}
 endsnippet
 
 snippet ANDIM "Bitwise imm5 AND register"
-AND ${1:DR}, ${2:SR1}, ${3:imm5 [-16, 15]} ; ${4: $1 <- $2 & $3}, setc
-${0}
+AND ${1:DR}, ${2:SR1}, ${3:imm5 [-16, 15]} ; ${4: $1 <- $2 & $3, setcc}${0}
 endsnippet
 
 snippet BR "Branch to PC + PCoffset9"
-BR${1:nzp} ${2:LABEL} ; If $1, then PC <- $2
-${0}
+BR${1:nzp} ${2:LABEL} ; If $1, then PC <- $2${0}
 endsnippet
 
 snippet JMP "Jump to Register"
-JMP ${1:BR} ; ${2:PC <- $1}
-${0}
+JMP ${1:BR} ; ${2:PC <- $1}${0}
 endsnippet
 
 snippet RET "Return to R7"
-RET ; ${1:PC <- R7}
-${0}
+RET ; ${1:PC <- R7}${0}
 endsnippet
 
 snippet JSR "Jump to Subroutine"
-JSR ${1:LABEL} ; ${2:PC <- $1}
-${0}
+JSR ${1:LABEL} ; ${2:PC <- $1}${0}
 endsnippet
 
 snippet JSRR "Jump to Subroutine by Register"
-JSRR ${1:BR} ; ${2:PC <- $1}
-${0}
+JSRR ${1:BR} ; ${2:PC <- $1}${0}
 endsnippet
 
 snippet LD "Load from PCoffset9"
-LD ${1:DR}, ${2:LABEL} ; ${3:$1 <-M[$2]}, setcc
-${0}
+LD ${1:DR}, ${2:LABEL} ; ${3:$1 <-M[$2], setcc}${0}
 endsnippet
 
 snippet LDI "Load Indirect"
-LDI ${1:DR}, ${2:LABEL} ; ${3:$1 <- M[M[$2]]}, setcc
-${0}
+LDI ${1:DR}, ${2:LABEL} ; ${3:$1 <- M[M[$2]], setcc}${0}
 endsnippet
 
 snippet LDR "Load from Register + offset6"
-LDR ${1:DR}, ${2:BR}, ${3:off6 [-32, 31]} ; ${4:$1 <- M[$2 + $3]}, setcc
-${0}
+LDR ${1:DR}, ${2:BR}, ${3:off6 [-32, 31]} ; ${4:$1 <- M[$2 + $3], setcc}${0}
 endsnippet
 
 snippet LEA "Load Effective Address"
-LEA ${1:DR}, ${2:LABEL} ; ${3:$1 <- address of $2}, setcc
-${0}
+LEA ${1:DR}, ${2:LABEL} ; ${3:$1 <- address of $2, setcc}${0}
 endsnippet
 
 snippet NOT "Bit-Wise Complement"
-NOT ${1:DR}, ${2:SR} ; ${3:$1 <- ~$2}, setcc
-${0}
+NOT ${1:DR}, ${2:SR} ; ${3:$1 <- ~$2, setcc}${0}
 endsnippet
 
 snippet ST "Store"
-ST ${1:SR}, ${2:LABEL} ; ${3:M[$2] <- $1}
-${0}
+ST ${1:SR}, ${2:LABEL} ; ${3:M[$2] <- $1}${0}
 endsnippet
 
 snippet STI "Store Indirect"
-STI ${1:SR}, ${2:LABEL} ; ${3:M[M[$2]] <- $1}
-${0}
+STI ${1:SR}, ${2:LABEL} ; ${3:M[M[$2]] <- $1}${0}
+
 endsnippet
 
 snippet STR "Store Base + Offset"
-STR ${1:SR}, ${2:BR}, ${3:off6 [-32, 31]} ; ${4:M[$2 + $3] <-$1}
-${0}
+STR ${1:SR}, ${2:BR}, ${3:off6 [-32, 31]} ; ${4:M[$2 + $3] <-$1}${0}
 endsnippet
 
 # Subroutine Snippet
 snippet sub "Create subroutine"
 	    ; BEGIN  ${1:SUBROUTINE}
 	    ; PURPOSE: ${2}
-	    ; R1: ${3:NOT USED}
-	    ; R2: ${4:NOT USED}
-	    ; R3: ${5:NOT USED}
-	    ; R4: ${6:NOT USED}
-	    ; R5: ${7:NOT USED}
-	    ; R6: ${8:NOT USED}
-	    ; R7: ${9:NOT USED}
-	    ; RETURNS: ${10:MEANING} in ${11:R1}
+	    ; COMPLEXITY: O(${3})
+	    ; ${4:Caller Saved}
+	    ; R0: ${5:NOT USED}
+	    ; R1: ${6:NOT USED}
+	    ; R2: ${7:NOT USED}
+	    ; R3: ${8:NOT USED}
+	    ; R4: ${9:NOT USED}
+	    ; R5: ${10:NOT USED}
+	    ; R6: ${11:NOT USED}
+	    ; R7: ${12:NOT USED}
+	    ; RETURNS: ${13:MEANING} in ${14:R1}
 $1
+	    ST R7, ${15:$1_RET_STORAGE} ; M[$15] <- R7
 	    ${0}
+	    LD R7, $15 ; R7 <- M[$15]
+	    RET ; PC <- R7
 	    ; END $1
 endsnippet
-
-
-
-
-
-
