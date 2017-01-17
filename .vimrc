@@ -10,6 +10,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Bundle "myusuf3/numbers.vim"
+Plugin 'octol/vim-cpp-enhanced-highlight'
 
 call vundle#end()
 filetype plugin indent on
@@ -250,6 +251,9 @@ let g:ycm_key_list_previous_completion=[]
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" }}}
+" cpp enhanced highlighting ----------------- {{{
+let g:cpp_experimental_simple_template_highlighting = 1
 " }}}
 " Set Secure
 set exrc
