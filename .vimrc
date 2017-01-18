@@ -268,3 +268,5 @@ function! HasPaste()
 	return ' '
 endfunction
 "}}}
+"
+" Check check
